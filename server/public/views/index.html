@@ -9,24 +9,16 @@
 
   <body>
     <h1>Mu's Zoo</h1>
-    <div id="zooContainer">
-      <form id="zooAnimals">
 
-        <label for="animal">Animal:</label>
-        <input type="text" id="animal" name="animal" />
+    <form id="animalContainer">
+      <label for="animal">Animal:</label>
+      <input type="text" name="animal" id="animal" />
 
-        <input type="submit" class="addAnimal" value="Add Animal" />
+      <input type="submit" name="Add Animal" class="addAnimal" />
+    </form>
 
-      </form>
-    </div>
-
-    
     <h2>Animals</h2>
-    <table id="animalDisplay">
-      <tr>
-        <th>Animal</th>
-        <th>Quantity</th>
-      </tr>
+    <div id="animalDisplay"></div>
 
   </body>
 

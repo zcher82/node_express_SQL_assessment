@@ -1,0 +1,10 @@
+
+table, th, td {
+    border: 1px solid black;
+    padding: 4px;
+    margin: 2px;
+}
+
+td.quantity {
+  text-align: center;
+}

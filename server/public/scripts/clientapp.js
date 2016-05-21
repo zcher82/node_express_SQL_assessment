@@ -1,69 +1,49 @@
 $(document).ready(function() {
 
-var animalQuantity = 0;
-//event listeners
-$('#zooAnimals').on('submit', function () {
-  createAnimal();
-  getQuantity();
-})
-
+  getAnimals(); //call getAnimals on page load to populate DOM with database data
+  $('#animalContainer').on('submit', createAnimal); //on submit, call function createAnimal
 
 });
 
-//create employee function, called when submit button on form is clicked
+//function making ajax call create the data to be sent/POST to database
 function createAnimal() {
   event.preventDefault();
 
   var animals = {};
 
-  $.each($('#zooAnimals').serializeArray(), function (i, field) {
+  //loop through each input field and store data in an object
+  $.each($('#animalContainer').serializeArray(), function (i, field) {
     animals[field.name] = field.value;
   });
   console.log(animals);
-  $('#zooAnimals')[0].reset();
-
-
+  $('#animalContainer')[0].reset();  //reset/clear form fields after clicking submit
 
   $.ajax({
     type: 'POST',
     url: '/animals',
-    data: animals, 
-    success: function (response) {
-
-    },
+    data: animals,
+    success: function(response) {
+      getAnimals();  //call getAnimals to get data from database
+    }
   });
 }
 
+
+//function making ajax call to retrieve info from database
 function getAnimals() {
-    $.ajax({
+  $.ajax({
       type: 'GET',
       url: '/animals',
-      success: function (data) {
-        $('#animalDisplay').empty();
-        data.forEach(function(animal, i) {
+      success: function (animals) {
+        console.log(animals);
+        $('#animalDisplay').empty();  //empty animalDisplay div so as new data is posted on DOM, data is not constantly repeated
+        $('#animalDisplay').append('<tr>'+'<th>Animal</th>'+  //create table rows ANIMAL and QUANTITY
+        '<th>Quantity</th>'+'</tr>');
 
-          $('#animalDisplay').append('<div class="newAnimal"></div');
-          var $el = $('#animalDisplay').children().last();
-          $el.data("id", animal.id);
-
-          $el.append('<p>' + 'Animal: ' + animal.animal + '</p>');
-          //$el.append('<p>' + 'Quantity: ' + animal.quantity + '</p>')
+        animals.forEach(function (animal) {  //for each returned array named animal, each object is named "animal" and data is appended into table rows
+          $('#animalDisplay').append('<tr>'+'<td class="animal">'+animal.animal+'</td>'+
+          '<td class=quantity>'+animal.quantity+'</td>'+'</tr>');
         });
-      }
+      },
   });
-}
-
-function getQuantity() {
-  $.ajax({
-    type: 'GET',
-    url: '/quantity',
-    success: function (data) {
-      console.log(data);
-      animalQuantity = data[0];
-      //console.log(animalQuantity);
-
-
-
-    }
-  })
 }

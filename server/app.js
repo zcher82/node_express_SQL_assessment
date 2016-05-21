@@ -3,7 +3,6 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 var animals = require('./routes/animals');
-var quantity = require('./routes/quantity');
 
 
 //middleware
@@ -12,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //routes
 app.use('/animals', animals);
-app.use('/quantity', quantity);
+
 
 
 // Catchall route
